@@ -1,3 +1,4 @@
+import re
 from bs4 import BeautifulSoup
 from file_utils import *
 
@@ -47,6 +48,13 @@ class Page:
             path = css['href']
             obj = self.new_object(path)
             objects.append(obj)
+        # embedded CSS
+        styles = soup.findAll('style', type='text/css')
+        for style in styles:
+            paths = re.findall(r'background-image:url\((.*)\);', style.string)
+            for path in paths:
+                obj = self.new_object(path)
+                objects.append(obj)
 
         return objects
 
