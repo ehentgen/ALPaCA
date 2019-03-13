@@ -55,7 +55,8 @@ def morph_object(fname, dst, target_size):
     elif ext == 'svg':
         morph = __pad_svg
     else:
-        raise NotImplementedError('Morphing files with extension {}'.format(ext))
+        print('Not implemented: morphing files with extension {}. The object will simply be replicated.'.format(ext))
+        morph = __replicate_object        
     
     morph(fname, dst, target_size)
 
@@ -307,6 +308,28 @@ def __pad_svg(fname, dst, target_size):
     with open(fname, 'rb') as f:
         text = f.read()
         text = __pad_html(text, target_size)
+    
+    with open(dst, 'wb') as f:
+        f.write(text)
+
+def __replicate_object(fname, dst, target_size):
+    """Trivial morphing. We simply replicate the object as such.
+    
+    This is used to "morph" objects whose extension is not
+    supported.
+    
+    Parameters
+    ----------
+    fname : string
+        CSS file name.
+    dst : string
+        Name of the destination file.
+    target : int
+        Size (in bytes) that the file should have.
+    """
+    
+    with open(fname, 'rb') as f:
+        text = f.read()
     
     with open(dst, 'wb') as f:
         f.write(text)
