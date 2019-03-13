@@ -55,6 +55,12 @@ class Page:
             for path in paths:
                 obj = self.new_object(path)
                 objects.append(obj)
+        # ICO images
+        links = soup.find_all('link', type='image/icon')
+        for ico in links:
+            path = ico['href']
+            obj = self.new_object(path)
+            objects.append(obj)
 
         return objects
 
