@@ -54,6 +54,8 @@ def morph_object(fname, dst, target_size):
         morph = __pad_css
     elif ext == 'svg':
         morph = __pad_svg
+    elif ext == 'ico':
+        morph = __pad_ico
     else:
         print('Not implemented: morphing files with extension {}. The object will simply be replicated.'.format(ext))
         morph = __replicate_object        
@@ -261,6 +263,21 @@ def __pad_gif(img, dst, target_size):
     # Same procedure as JPEG.
     __pad_jpeg(img, dst, target_size)
 
+def __pad_ico(img, dst, target_size):
+    """Pad an ICO image.
+    
+    Parameters
+    ----------
+    fname : str
+        Name of the image file.
+    dst : str
+        Name of the destination file.
+    target_size : int
+        Desired size.
+    """
+    # Same procedure as JPEG.
+    __pad_jpeg(img, dst, target_size)  
+    
 def __pad_tiff(img, dst, target_size):
     """Pad a TIFF image.
     
