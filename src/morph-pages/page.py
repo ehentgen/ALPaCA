@@ -51,12 +51,13 @@ class Page:
         # embedded CSS
         styles = soup.findAll('style', type='text/css')
         for style in styles:
-            paths = re.findall(r'background-image:url\((.*)\);', style.string)
+            paths = re.findall(r'background-image:[ ]{0,}url\((.*[.](?:gif|png|jpg|ico)(?:"?){1})\);', style.string)
             for path in paths:
+                path = path.replace('"', '')
                 obj = self.new_object(path)
                 objects.append(obj)
         # ICO images
-        links = soup.find_all('link', type='image/icon')
+        links = soup.find_all('link', type='image/icon') + soup.find_all('link', type='image/x-icon')
         for ico in links:
             path = ico['href']
             obj = self.new_object(path)
